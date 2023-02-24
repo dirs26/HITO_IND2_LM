@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Stock X database</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="factura.html">Factura</a>
+          <a class="nav-link" href="cliente.html">Datos Clientes</a>
+          <a class="nav-link" href="pedidos.html">Datos Pedidos</a>
+          <a class="nav-link" href="pedidos4t2022.html">Pedidos 4 trimistre</a>
+          <a class="nav-link" href="pedidos1t2021.html">Pedidos 1 trimestre</a>
+          <a class="nav-link" href="facturasHI2.html">Intento Buscador de Facturas</a> 
+        </div>
+      </div>
+    </div>
+  </nav>
+    <div class="divformulario">
+                <form class="formulario">
+                    <fieldset>
+                        <label for="idnumber">Elija el numero de factura: (1 - <span id="number"></span>): </label>
+                        <input type="number" id="idnumber" name="idnumber">
+                        <button type="submit" id="idsubmit">Submit</button>
+                    </fieldset>
+                </form>
+                <table class="tabla_factura">
+                    <th class="header_tabla">Buscador de factura</th>
+                    <tr>
+                        <td>Número: </td>
+                        <td id="cliente"></td>
+                    </tr>
+                    <tr>
+                        <td>Nombre: </td>
+                        <td id="nombre"></td>
+                    </tr>
+                    <tr>
+                        <td>Apellido: </td>
+                        <td id="primerA"></td>
+                    </tr>
+                    <tr>
+                        <td>Teléfono: </td>
+                        <td id="telefono"></td>
+                    </tr>
+                    <tr>
+                        <td>Calle: </td>
+                        <td id="calle"></td>
+                    </tr>
+                    <tr>
+                        <td>Ciudad: </td>
+                        <td id="ciu"></td>
+                    </tr>
+                    <tr>
+                        <td>Provincia: </td>
+                        <td id="prov"></td>
+                    </tr>
+                    <tr>
+                        <td>Codigo Postal: </td>
+                        <td id="cp"></td>
+                    </tr>
+                    <tr>
+                        <td>Correo: </td>
+                        <td id="correo"></td>
+                    </tr>
+                    <tr>
+                        <td>Nombre del Producto: </td>
+                        <td id="nombre_producto"></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha compra: </td>
+                        <td id="fecha_pedido"></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha entrega: </td>
+                        <td id="fecha_entrega"></td>
+                    </tr>
+                    <tr>
+                        <td>Total factura: </td>
+                        <td id="total"></td>
+                    </tr>
+                </table>
+            </div>
+    <script>
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "tienda.xml", true);
+        
+                window.addEventListener("load", function () {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("GET", "tienda.xml", true);
+        
+                    xhr.onreadystatechange = function () {
+                        if (this.readyState === 4 && this.status === 200) {
+                            const xmlDoc = this.responseXML;
+                            const numberSpan = document.querySelector("#number");
+                            const tienda_stockx = xmlDoc.getElementsByTagName("numero");
+                            numberSpan.innerHTML = tienda_stockx.length;
+                        }
+                    };
+        
+                    xhr.send();
+                });
+        
+        
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        const xmlDoc = this.responseXML;
+                        const form = document.querySelector("form");
+        
+                        form.addEventListener("submit", function (event) {
+                            event.preventDefault();
+                            const idNumber = document.querySelector("#idnumber").value;
+                            var tienda_stockx = xmlDoc.getElementsByTagName("numero");
+                            if (idNumber < 1 || idNumber > (tienda_stockx.length)) {
+                                document.querySelector("#numero").innerHTML = "";
+                                document.querySelector("#nombre").innerHTML = "";
+                                document.querySelector("#primerA").innerHTML = "";
+                                document.querySelector("#segundoA").innerHTML = "";
+                                document.querySelector("#telefono").innerHTML = "";
+                                document.querySelector("#calle").innerHTML = "";
+                                document.querySelector("#ciu").innerHTML = "";
+                                document.querySelector("#prov").innerHTML = "";
+                                document.querySelector("#cp").innerHTML = "";
+                                document.querySelector("#correo").innerHTML = "";
+                                document.querySelector("#nombre_producto").innerHTML = "";
+                                document.querySelector("#fecha_pedido").innerHTML = "";
+                                document.querySelector("#fecha_entrega").innerHTML = "";
+                                document.querySelector("#total").innerHTML = "";
+                                log.innerHTML = "No se encontró una nota con ese número";
+                                return;
+        }
+                            const pedido = tienda_stockx[idNumber - 1];
+                            const numero = tienda_stockx.getElementsByTagName("numero")[0].childNodes[0].nodeValue;
+                            const nombre = tienda_stockx.getElementsByTagName("nombre")[0].childNodes[0].nodeValue;
+                            const primerA = tienda_stockx.getElementsByTagName("primerA")[0].childNodes[0].nodeValue;
+                            const segundoA = tienda_stockx.getElementsByTagName("segundoA")[0].childNodes[0].nodeValue;
+                            const telefono = tienda_stockx.getElementsByTagName("telefono")[0].childNodes[0].nodeValue;
+                            const calle = tienda_stockx.getElementsByTagName("calle")[0].childNodes[0].nodeValue;
+                            const ciu = tienda_stockx.getElementsByTagName("ciu")[0].childNodes[0].nodeValue;
+                            const prov = tienda_stockx.getElementsByTagName("prov")[0].childNodes[0].nodeValue;
+                            const cp = tienda_stockx.getElementsByTagName("cp")[0].childNodes[0].nodeValue;
+                            const correo = tienda_stockx.getElementsByTagName("correo")[0].childNodes[0].nodeValue;
+                            const nombre_producto = tienda_stockx.getElementsByTagName("nombre_producto")[0].childNodes[0].nodeValue;
+                            const fecha_pedido = tienda_stockx.getElementsByTagName("fecha_pedido")[0].childNodes[0].nodeValue;
+                            const fecha_entrega = tienda_stockx.getElementsByTagName("fecha_entrega")[0].childNodes[0].nodeValue;
+                            const total = tienda_stockx.getElementsByTagName("total")[0].childNodes[0].nodeValue;
+      
+                            document.querySelector("#numero").innerHTML = numero;
+                            document.querySelector("#nombre").innerHTML = nombre;
+                            document.querySelector("#primerA").innerHTML = primerA;
+                            document.querySelector("#segundoA").innerHTML = segundoA;
+                            document.querySelector("#telefono").innerHTML = telefono;
+                            document.querySelector("#calle").innerHTML = calle;
+                            document.querySelector("#ciu").innerHTML = ciu;
+                            document.querySelector("#prov").innerHTML = prov;
+                            document.querySelector("#cp").innerHTML = cp;
+                            document.querySelector("#correo").innerHTML = correo;
+                            document.querySelector("#nombre_producto").innerHTML = nombre_producto;
+                            document.querySelector("#fecha_pedido").innerHTML = fecha_pedido;
+                            document.querySelector("#fecha_entrega").innerHTML = fecha_entrega;
+                            document.querySelector("#total").innerHTML = total;
+                        });
+                    }
+                };
+                xhr.send();
+    </script>
+        
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

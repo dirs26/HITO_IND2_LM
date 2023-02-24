@@ -1,0 +1,31 @@
+<!ELEMENT tienda_stockx (anho_2021,anho_2022)>
+<!ELEMENT anho_2021 (trimestre1,trimestre2,trimestre3,trimestre4)>
+<!ELEMENT anho_2022 (trimestre1,trimestre2,trimestre3,trimestre4)>
+<!ELEMENT trimestre1 (usuarios+)>
+<!ELEMENT trimestre2 (usuarios+)>
+<!ELEMENT trimestre3 (usuarios+)>
+<!ELEMENT trimestre4 (usuarios+)>
+<!ELEMENT usuarios (numero, nombre, apellido, telefono, dir, correo, fecha_inclusión, pedidos)>
+<!ELEMENT numero (#PCDATA)>
+<!ELEMENT nombre (#PCDATA)>
+<!ELEMENT apellido (primerA, segundoA)>
+<!ELEMENT primerA (#PCDATA)>
+<!ELEMENT segundoA (#PCDATA)>
+<!ELEMENT telefono (#PCDATA)>
+<!ELEMENT dir (calle, ciu, prov, cp)>
+<!ELEMENT calle (#PCDATA)>
+<!ELEMENT ciu (#PCDATA)>
+<!ELEMENT prov (#PCDATA)>
+<!ELEMENT cp (#PCDATA)>
+<!ELEMENT correo (#PCDATA)>
+<!ELEMENT fecha_inclusión (#PCDATA)>
+<!ELEMENT pedidos (num_pedido, fecha_pedido, fecha_entrega, total, producto)>
+<!ELEMENT num_pedido (#PCDATA)>
+<!ELEMENT fecha_pedido (#PCDATA)>
+<!ELEMENT fecha_entrega (#PCDATA)>
+<!ELEMENT total (#PCDATA)>
+<!ELEMENT producto (nombre_producto, referencia_producto, precio_producto, unidades_producto)>
+<!ELEMENT nombre_producto (#PCDATA)>
+<!ELEMENT referencia_producto (#PCDATA)>
+<!ELEMENT precio_producto (#PCDATA)>
+<!ELEMENT unidades_producto (#PCDATA)>
